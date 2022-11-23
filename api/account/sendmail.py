@@ -31,6 +31,7 @@ async def sendmail(req: SendMail, background_tasks: BackgroundTasks):
     
     code = ''.join(sample(ascii_letters+digits, 10))
     await redis.set(req.email, code, ex=600) #10분 만료
+    await redis.set(code, req.email, ex=600)
     
     background_tasks.add_task(send_mail, req.email, code)
     
