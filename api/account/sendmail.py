@@ -8,6 +8,7 @@ from schemas.account import SendMail
 import aioredis
 import smtplib
 
+
 def send_mail(email_addr: str, code: str):
     s = smtplib.SMTP('smtp.gmail.com', 587)
     s.starttls()
@@ -16,6 +17,7 @@ def send_mail(email_addr: str, code: str):
     mail_content['Subject'] = "제목 : 메일 테스트입니다."
     s.sendmail('juwoon7163@gmail.com', email_addr, mail_content.as_string())
     s.quit()
+
 
 router = APIRouter()
 
