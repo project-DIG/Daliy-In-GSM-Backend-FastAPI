@@ -14,8 +14,10 @@ class Settings(BaseSettings):
     DB_PASSWORD: str = os.getenv("DB_PASSWORD")
     DB_HOST: str = os.getenv("DB_HOST")
     DB_PORT: int = os.getenv("DB_PORT")
-    DB_URL: str = f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+    DB_URL: str = f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{str(DB_PORT)}/{DB_NAME}"
 
+    REDIS_HOST: str = os.getenv("REDIS_HOST")
+    REDIS_DATABASE: str = os.getenv("REDIS_DATABASE")
 
 
 
