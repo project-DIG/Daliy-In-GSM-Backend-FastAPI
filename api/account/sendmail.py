@@ -61,8 +61,8 @@ async def sendmail(req: SendMail, background_tasks: BackgroundTasks):
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="진행중인 인증이 있습니다")
     
     code = ''.join(sample(ascii_letters+digits, 10))
-    await redis.set(req.email, code, ex=6) #10분 만료
-    await redis.set(code, req.email, ex=6)
+    await redis.set(req.email, code, ex=600) #10분 만료
+    await redis.set(code, req.email, ex=600)
     
     background_tasks.add_task(send_mail, req.email, code)
     
