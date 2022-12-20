@@ -2,7 +2,7 @@
 
 ## Test Server Deploy Setting 
 > Amazon Linux 2 기준입니다.
-### python & python environment install
+
 - clone git repository
 ```shell
 git clone -b develop https://github.com/project-DIG/Daliy-In-GSM-Backend-FastAPI.git
