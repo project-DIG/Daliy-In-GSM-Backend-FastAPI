@@ -18,5 +18,7 @@ class Settings(BaseSettings):
     REDIS_PORT: int = os.getenv("REDIS_PORT")
     REDIS_DB: int = os.getenv("REDIS_DB")
 
+    HASH_SALT: str = os.getenv("HASH_SALT")
+
 
 settings = Settings()

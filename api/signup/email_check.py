@@ -12,7 +12,7 @@ def email_check(req: CheckCode):
         if conn.get(req.email) == None:
             raise HTTPException(status.HTTP_400_BAD_REQUEST, detail="이 이메일로 진행중인 인증이 없습니다.")
         if conn.get(req.email).decode() == req.code:
-            conn.delete(req.email)
+            conn.set(req.email, "success")
             return {"detail": "성공하였습니다."}
         else:
             raise HTTPException(status.HTTP_401_UNAUTHORIZED, detail="인증번호가 다릅니다.")

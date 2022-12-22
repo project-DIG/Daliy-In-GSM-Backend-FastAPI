@@ -6,8 +6,11 @@ engine = create_engine(f"mysql+pymysql://{settings.DB_URL}")
 
 
 def get_db():
-    session = scoped_session(sessionmaker(bind=engine, autocommit=True))
+    session = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=engine))
     try:
         yield session
+        session.commit()
+    except:
+        session.rollback()
     finally:
         session.close()

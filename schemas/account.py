@@ -8,3 +8,9 @@ class SendMail(BaseModel):
 class CheckCode(BaseModel):
     email: str
     code: str
+
+
+class SignUp(BaseModel):
+    name: str
+    password: str
+    email: str
