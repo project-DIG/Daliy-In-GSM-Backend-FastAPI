@@ -1,7 +1,10 @@
 from pydantic import BaseModel
 
 
-class SignUp(BaseModel):
+class SendMail(BaseModel):
     email: str
-    password: str
-    nickname: str
+
+
+class CheckCode(BaseModel):
+    email: str
+    code: str
