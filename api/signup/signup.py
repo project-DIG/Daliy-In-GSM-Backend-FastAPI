@@ -16,4 +16,5 @@ def signup(req: SignUp, db=Depends(get_db), redis_db: StrictRedis = Depends(get_
 
     hashed_password = bcrypt.hashpw(req.password.encode(), settings.HASH_SALT.encode()).decode()
     db.add(User(id=None, name=req.name, password=hashed_password, email=req.email, profile_image="null"))
+    redis_db.delete(req.email)
     return {"detail": "성공하였습니다"}
