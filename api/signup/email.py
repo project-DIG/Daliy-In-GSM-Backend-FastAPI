@@ -33,4 +33,4 @@ def email(req: SendMail, background_tasks: BackgroundTasks, redis_db: StrictRedi
         redis_db.set(req.email, code, ex=100)
 
     background_tasks.add_task(send_mail, req.email, code)
-    return {"message": "success"}
+    return {"detail": "성공하였습니다."}
