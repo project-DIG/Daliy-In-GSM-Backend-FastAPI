@@ -1,10 +1,11 @@
-from fastapi import APIRouter, BackgroundTasks, HTTPException, status
+from fastapi import APIRouter, BackgroundTasks, HTTPException, status, Depends
+from db.session import get_redis_db
 from schemas.account import SendMail
 from email.mime.text import MIMEText
+from redis import StrictRedis
 import smtplib
 import random
 import string
-import redis
 
 
 def send_mail(email: str, code: str):
@@ -23,13 +24,13 @@ router = APIRouter()
 
 
 @router.post("/email")
-def email(req: SendMail, background_tasks: BackgroundTasks):
+def email(req: SendMail, background_tasks: BackgroundTasks, redis_db: StrictRedis = Depends(get_redis_db)):
     code = "".join([random.choice(string.digits) for i in range(6)])
 
-    with redis.StrictRedis(host="127.0.0.1", port=6379, db=0) as conn:
-        if conn.get(req.email) != None:
-            raise HTTPException(status.HTTP_400_BAD_REQUEST, detail="진행중인 인증이 있습니다.")
-        conn.set(req.email, code, ex=10)
+    if redis_db.get(req.email) != None:
+        raise HTTPException(status.HTTP_400_BAD_REQUEST, detail="진행중인 인증이 있습니다.")
+    else:
+        redis_db.set(req.email, code, ex=100)
 
     background_tasks.add_task(send_mail, req.email, code)
     return {"message": "success"}

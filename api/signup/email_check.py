@@ -1,18 +1,18 @@
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, HTTPException, status, Depends
 from core.config import settings
+from db.session import get_redis_db
 from schemas.account import CheckCode
-import redis
+from redis import StrictRedis
 
 router = APIRouter()
 
 
 @router.post("/email/check")
-def email_check(req: CheckCode):
-    with redis.StrictRedis(host=settings.REDIS_HOST, port=settings.REDIS_PORT, db=settings.REDIS_DB) as conn:
-        if conn.get(req.email) == None:
-            raise HTTPException(status.HTTP_400_BAD_REQUEST, detail="이 이메일로 진행중인 인증이 없습니다.")
-        if conn.get(req.email).decode() == req.code:
-            conn.set(req.email, "success")
-            return {"detail": "성공하였습니다."}
-        else:
-            raise HTTPException(status.HTTP_401_UNAUTHORIZED, detail="인증번호가 다릅니다.")
+def email_check(req: CheckCode, redis_db: StrictRedis = Depends(get_redis_db)):
+    if redis_db.get(req.email) == None:
+        raise HTTPException(status.HTTP_400_BAD_REQUEST, detail="이 이메일로 진행중인 인증이 없습니다.")
+    if redis_db.get(req.email).decode() == req.code:
+        redis_db.set(req.email, "success")
+        return {"detail": "성공하였습니다."}
+    else:
+        raise HTTPException(status.HTTP_401_UNAUTHORIZED, detail="인증번호가 다릅니다.")
