@@ -13,7 +13,7 @@ def generate_token(payload: dict, type: str):
         payload["exp"] = datetime.datetime.utcnow() + datetime.timedelta(seconds=settings.ACCESS_EXPIRE)
 
     else:
-        raise "Token type must be 'refresh' or 'access'"
+        raise Exception("Token type must be 'refresh' or 'access'")
 
     return jwt.encode(payload, settings.JWT_SECRET, settings.JWT_ALGORITM)
 
