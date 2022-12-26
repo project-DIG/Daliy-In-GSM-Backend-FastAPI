@@ -1,6 +1,6 @@
 from fastapi import APIRouter, BackgroundTasks, HTTPException, status, Depends
 from db.session import get_redis_db
-from schemas.account import SendMail
+from schemas.signup import SendMail
 from email.mime.text import MIMEText
 from redis import StrictRedis
 import smtplib
