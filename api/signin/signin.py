@@ -23,4 +23,4 @@ def signin(req: SignIn, db: Session = Depends(get_db)):
     refresh_token = generate_token(payload={"iss": "DIG", "email": req.email}, type="refresh")
     access_token = generate_token(payload={"iss": "DIG", "email": req.email}, type="access")
 
-    return {"refresh_token": refresh_token, "access_token": access_token}
+    return {"detail": "성공하였습니다.", "refresh_token": refresh_token, "access_token": access_token}
