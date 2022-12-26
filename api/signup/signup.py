@@ -2,7 +2,7 @@ from fastapi import APIRouter, status, HTTPException, Depends
 from core.config import settings
 from db.session import get_db, get_redis_db
 from models.User import User
-from schemas.account import SignUp
+from schemas.signup import SignUp
 from redis import StrictRedis
 import bcrypt
 
