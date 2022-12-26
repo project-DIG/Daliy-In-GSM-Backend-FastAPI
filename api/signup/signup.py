@@ -12,9 +12,9 @@ router = APIRouter()
 @router.post("/")
 def signup(req: SignUp, db=Depends(get_db), redis_db: StrictRedis = Depends(get_redis_db)):
     if redis_db.get(req.email) == None or redis_db.get(req.email).decode() != "success":
-        raise HTTPException(status.HTTP_400_BAD_REQUEST, detail="이메일 인증이 완료되지 않았습니다.")
+        raise HTTPException(status.HTTP_400_BAD_REQUEST, detail="진행중인 인증이 있습니다.")
 
-    hashed_password = bcrypt.hashpw(req.password.encode(), settings.HASH_SALT.encode()).decode()
+    hashed_password = bcrypt.hashpw(req.password.encode(), bcrypt.gensalt()).decode()
     db.add(User(id=None, name=req.name, password=hashed_password, email=req.email, profile_image="null"))
     redis_db.delete(req.email)
     return {"detail": "성공하였습니다."}
