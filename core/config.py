@@ -18,5 +18,8 @@ class Settings(BaseSettings):
     REDIS_PORT: int = os.getenv("REDIS_PORT")
     REDIS_DB: int = os.getenv("REDIS_DB")
 
+    JWT_SECRET: str = os.getenv("JWT_SECRET")
+    JWT_ALGORITM: str = "HS256"
+
 
 settings = Settings()
