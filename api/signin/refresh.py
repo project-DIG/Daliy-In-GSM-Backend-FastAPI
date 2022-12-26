@@ -11,7 +11,7 @@ def refresh(req: Refresh):
     try:
         payload = decode_token(req.refresh_token)
         access_token = generate_token(payload=payload, type="access")
-        return {"access_token": access_token}
+        return {"detail": "성공하였습니다.", "access_token": access_token}
 
     except DecodeError:
         raise HTTPException(status.HTTP_401_UNAUTHORIZED, detail="토큰이 올바르지 않습니다.")
