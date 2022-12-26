@@ -21,5 +21,8 @@ class Settings(BaseSettings):
     JWT_SECRET: str = os.getenv("JWT_SECRET")
     JWT_ALGORITM: str = "HS256"
 
+    REFRESH_EXPIRE: int = 604800  # 1주
+    ACCESS_EXPIRE: int = 1800  # 30분
+
 
 settings = Settings()
