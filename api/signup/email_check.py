@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, status, Depends
 from core.config import settings
 from db.session import get_redis_db
-from schemas.account import CheckCode
+from schemas.signup import CheckCode
 from redis import StrictRedis
 
 router = APIRouter()

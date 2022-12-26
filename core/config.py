@@ -18,7 +18,11 @@ class Settings(BaseSettings):
     REDIS_PORT: int = os.getenv("REDIS_PORT")
     REDIS_DB: int = os.getenv("REDIS_DB")
 
-    HASH_SALT: str = os.getenv("HASH_SALT")
+    JWT_SECRET: str = os.getenv("JWT_SECRET")
+    JWT_ALGORITM: str = "HS256"
+
+    REFRESH_EXPIRE: int = 604800  # 1주
+    ACCESS_EXPIRE: int = 1800  # 30분
 
 
 settings = Settings()
