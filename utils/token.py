@@ -1,3 +1,4 @@
+from fastapi import Request, HTTPException, status
 from core.config import settings
 import datetime
 import jwt
@@ -20,3 +21,11 @@ def generate_token(payload: dict, type: str):
 
 def decode_token(token: str):
     return jwt.decode(token, settings.JWT_SECRET, settings.JWT_ALGORITM)
+
+
+def get_current_user(req: Request):
+    if "Authorization" not in req.headers:
+        raise HTTPException(status.HTTP_401_UNAUTHORIZED, "토큰이 없습니다.")
+    token = req.headers["Authorization"].split(" ")[1]
+
+    return decode_token(token)

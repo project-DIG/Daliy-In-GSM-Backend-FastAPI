@@ -13,6 +13,3 @@ class Like(Base):
     user_id = Column(ForeignKey("user.id", ondelete="RESTRICT", onupdate="RESTRICT"), nullable=False, index=True)
     video_id = Column(ForeignKey("video.id", ondelete="RESTRICT", onupdate="RESTRICT"), nullable=False, index=True)
     type = Column(String(45), nullable=False)
-
-    user = relationship("User")
-    video = relationship("Video")
