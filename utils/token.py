@@ -8,7 +8,7 @@ def generate_token(payload: dict, type: str):
         payload["type"] = "refresh"
         payload["exp"] = datetime.datetime.utcnow() + datetime.timedelta(seconds=settings.REFRESH_EXPIRE)
 
-    if type == "access":
+    elif type == "access":
         payload["type"] = "access"
         payload["exp"] = datetime.datetime.utcnow() + datetime.timedelta(seconds=settings.ACCESS_EXPIRE)
 

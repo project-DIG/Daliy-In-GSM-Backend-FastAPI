@@ -20,7 +20,7 @@ def signin(req: SignIn, db: Session = Depends(get_db)):
     if bcrypt.checkpw(req.password.encode(), user.password.encode()) == False:
         raise HTTPException(status.HTTP_401_UNAUTHORIZED, detail="비밀번호가 올바르지 않습니다.")
 
-    refresh_token = generate_token({"iss": "DIG", "email": req.email}, type="refresh")
-    access_token = generate_token({"iss": "DIG", "email": req.email}, type="access")
+    refresh_token = generate_token(payload={"iss": "DIG", "email": req.email}, type="refresh")
+    access_token = generate_token(payload={"iss": "DIG", "email": req.email}, type="access")
 
     return {"refresh_token": refresh_token, "access_token": access_token}
