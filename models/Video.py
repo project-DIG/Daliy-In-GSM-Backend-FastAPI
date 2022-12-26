@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, Integer, String
+from sqlalchemy import Column, ForeignKey, Integer, String, LargeBinary
 from sqlalchemy.dialects.mysql import TINYTEXT
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
@@ -15,5 +15,6 @@ class Video(Base):
     dislike = Column(Integer, nullable=False)
     tag = Column(String(45), nullable=False)
     uploader_id = Column(ForeignKey("user.id", ondelete="RESTRICT", onupdate="RESTRICT"), nullable=False, index=True)
+    video_upload = Column(LargeBinary)
 
     uploader = relationship("User")
