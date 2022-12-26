@@ -1,8 +1,10 @@
 from fastapi import APIRouter, BackgroundTasks, HTTPException, status, Depends
-from db.session import get_redis_db
+from db.session import get_db, get_redis_db
+from models.User import User
 from schemas.signup import SendMail
 from email.mime.text import MIMEText
 from redis import StrictRedis
+from sqlalchemy.orm import Session
 import smtplib
 import random
 import string
@@ -24,11 +26,18 @@ router = APIRouter()
 
 
 @router.post("/email")
-def email(req: SendMail, background_tasks: BackgroundTasks, redis_db: StrictRedis = Depends(get_redis_db)):
+def email(
+    req: SendMail,
+    background_tasks: BackgroundTasks,
+    redis_db: StrictRedis = Depends(get_redis_db),
+    db: Session = Depends(get_db),
+):
     code = "".join([random.choice(string.digits) for i in range(6)])
 
     if redis_db.get(req.email) != None:
         raise HTTPException(status.HTTP_400_BAD_REQUEST, detail="진행중인 인증이 있습니다.")
+    elif db.query(User).filter(User.email == req.email).one_or_none() != None:
+        raise HTTPException(status.HTTP_409_CONFLICT, detail="이메일이 사용중입니다.dl")
     else:
         redis_db.set(req.email, code, ex=100)
 
