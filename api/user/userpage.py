@@ -12,7 +12,7 @@ router = APIRouter()
 
 
 @router.get("/{user_id}")
-def userpage(user_id: int, db: Session = Depends(get_db), user=Depends(get_current_user)):
+def userpage(user_id: int, db: Session = Depends(get_db), current_user=Depends(get_current_user)):
     user = db.query(User).filter(User.id == user_id).one_or_none()
 
     if user == None:
@@ -26,7 +26,10 @@ def userpage(user_id: int, db: Session = Depends(get_db), user=Depends(get_curre
     data["follower"] = follower
     data["follow"] = follow
 
-    if db.query(User).filter((User.id == user_id) & (User.email == user.email)).one_or_none() != None:
+    if (
+        current_user != None
+        and db.query(User).filter((User.id == user_id) & (User.email == current_user.email)).one_or_none() != None
+    ):
         data["is_mine"] = True
 
     else:

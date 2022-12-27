@@ -25,7 +25,7 @@ def decode_token(token: str):
 
 def get_current_user(req: Request):
     if "Authorization" not in req.headers:
-        raise HTTPException(status.HTTP_401_UNAUTHORIZED, "토큰이 없습니다.")
+        return None
     token = req.headers["Authorization"].split(" ")[1]
 
     return decode_token(token)
