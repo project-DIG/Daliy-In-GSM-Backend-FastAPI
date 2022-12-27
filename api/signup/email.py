@@ -34,10 +34,12 @@ def email(
 ):
     code = "".join([random.choice(string.digits) for i in range(6)])
 
+    if req.email.endswith("gsm.hs.kr") == False:
+        raise HTTPException(status.HTTP_400_BAD_REQUEST, detail="GSM 계정이 아닙니다.")
     if redis_db.get(req.email) != None:
         raise HTTPException(status.HTTP_400_BAD_REQUEST, detail="진행중인 인증이 있습니다.")
     elif db.query(User).filter(User.email == req.email).one_or_none() != None:
-        raise HTTPException(status.HTTP_409_CONFLICT, detail="이메일이 사용중입니다.dl")
+        raise HTTPException(status.HTTP_409_CONFLICT, detail="이메일이 사용중입니다.")
     else:
         redis_db.set(req.email, code, ex=100)
 
