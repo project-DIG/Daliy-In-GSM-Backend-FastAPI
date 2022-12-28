@@ -5,7 +5,7 @@ client = TestClient(app)
 
 
 def test_email():
-    data = {"email": "test@test.com"}
+    data = {"email": "test@gsm.hs.kr"}
     response = client.post("/signup/email", json=data)
     assert response.status_code == 200
 

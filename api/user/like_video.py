@@ -10,9 +10,11 @@ from sqlalchemy.orm import Session
 router = APIRouter()
 
 
-@router.get("/{user_id}/video/like")
-def like_video(user_id: int, db: Session = Depends(get_db)):
-    likes = db.query(Like.video_id).filter((Like.user_id == user_id) & (Like.type == "like")).all()
+@router.get("/{user_name}/video/like")
+def like_video(user_name: str, db: Session = Depends(get_db)):
+    user = db.query(User).filter(User.name == user_name).one_or_none()
+
+    likes = db.query(Like.video_id).filter((Like.user_id == user.id) & (Like.type == "like")).all()
     data = {"videos": []}
     for i in likes:
         video = db.query(Video).filter(Video.id == i[0]).one()
