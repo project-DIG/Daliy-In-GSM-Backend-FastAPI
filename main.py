@@ -14,6 +14,16 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
+@app.get("/zz")
+def test():
+    import redis
+    from core.config import settings
+
+    r = redis.StrictRedis(settings.REDIS_DB, settings.REDIS_PORT, settings.REDIS_DB)
+    return r.get("asd")
+
+
 if __name__ == "__main__":
     import uvicorn
 
