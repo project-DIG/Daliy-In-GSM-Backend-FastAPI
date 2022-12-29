@@ -17,8 +17,8 @@ jobs:
             - name: AWS ECR
               uses: kciter/aws-ecr-action@v4
               with:
-                access_key_id: AKIA4GKWAHN2QCLPFEUB
-                secret_access_key: 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
+                access_key_id: ${{ secret.ACCESS_KEY_ID }}
+                secret_access_key: ${{ secret.SECRET_ACCESS_KEY }}
                 account_id: 838235863925
                 repo: dig-fastapi
                 region: ap-northeast-2
