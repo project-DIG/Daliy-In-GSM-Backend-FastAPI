@@ -4,3 +4,4 @@ __pycache__/
 venv/
 dig.pem
 .pytest_cache/
+.vscode/

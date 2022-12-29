@@ -23,6 +23,7 @@ class Settings(BaseSettings):
 
     REFRESH_EXPIRE: int = 604800  # 1주
     ACCESS_EXPIRE: int = 1800  # 30분
+    EMAIL_AUTH_EXPIRE: int = 300  # 5분
 
 
 settings = Settings()

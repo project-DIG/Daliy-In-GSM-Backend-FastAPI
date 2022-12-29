@@ -10,10 +10,12 @@ from sqlalchemy.orm import Session
 router = APIRouter()
 
 
-@router.get("/{user_id}/video")
-def user_video(user_id: int, db: Session = Depends(get_db)):
-    videos = db.query(Video).filter(Video.uploader_id == user_id).all()
-    print(videos)
+@router.get("/{user_name}/video")
+def user_video(user_name: str, db: Session = Depends(get_db)):
+    user = db.query(User).filter(User.name == user_name).one_or_none()
+
+    videos = db.query(Video).filter(Video.uploader_id == user.id).all()
+
     data = {
         "videos": [
             {

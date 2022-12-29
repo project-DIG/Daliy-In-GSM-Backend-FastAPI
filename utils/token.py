@@ -1,6 +1,7 @@
 from fastapi import Request, HTTPException, status
 from core.config import settings
 import datetime
+from jwt import ExpiredSignatureError, InvalidTokenError
 import jwt
 
 
@@ -20,12 +21,21 @@ def generate_token(payload: dict, type: str):
 
 
 def decode_token(token: str):
-    return jwt.decode(token, settings.JWT_SECRET, settings.JWT_ALGORITM)
+    try:
+        payload = jwt.decode(token, settings.JWT_SECRET, settings.JWT_ALGORITM)
+    except ExpiredSignatureError:
+        raise HTTPException(status.HTTP_401_UNAUTHORIZED, detail="만료된 토큰입니다.")
+    except InvalidTokenError:
+        raise HTTPException(status.HTTP_401_UNAUTHORIZED, detail="올바르지 않은 토큰입니다.")
+    return payload
 
 
 def get_current_user(req: Request):
     if "Authorization" not in req.headers:
         return None
-    token = req.headers["Authorization"].split(" ")[1]
+    try:
+        token = req.headers["Authorization"].split(" ")[1]
+    except:
+        token = req.headers["Authorization"]
 
     return decode_token(token)
