@@ -1,0 +1,33 @@
+name: Deploy to Amazon ECS
+
+on:
+    push:
+        branches: ["master"]
+
+env:
+    AWS_REGION: ap-northeast-2
+    CONTAINER_NAME: dig-django-container
+
+permissions:
+    contents: read
+
+jobs:
+    deploy:
+        name: Deploy
+        runs-on: ubuntu-latest
+        environment: production
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+
+            - name: AWS ECR PUSH
+              uses: kciter/aws-ecr-action@v4
+              with:
+                access_key_id: 838235863925
+                secret_access_key: 9mC11wKsfWNhQPOQZ1kK3bEogGUhTrYA6ighKWpn
+                account_id: AKIA4GKWAHN2QCLPFEUB
+                repo: dig-fastapi
+                region: ap-northeast-2
+                dockerfile: Dockerfile
+                path: .
