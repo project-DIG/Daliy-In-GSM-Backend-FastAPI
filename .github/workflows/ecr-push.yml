@@ -1,4 +1,4 @@
-name: Deploy to Amazon ECS
+name: Push to AWS ECR
 
 on:
     push:
@@ -6,7 +6,7 @@ on:
 
 jobs:
     deploy:
-        name: Deploy
+        name: Push to ECR
         runs-on: ubuntu-latest
         environment: production
 
@@ -14,13 +14,14 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v3
 
-            - name: AWS ECR PUSH
+            - name: AWS ECR
               uses: kciter/aws-ecr-action@v4
               with:
-                access_key_id: 838235863925
+                access_key_id: AKIA4GKWAHN2QCLPFEUB
                 secret_access_key: 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
-                account_id: AKIA4GKWAHN2QCLPFEUB
+                account_id: 838235863925
                 repo: dig-fastapi
                 region: ap-northeast-2
+                tags: latest
                 dockerfile: Dockerfile
                 path: .
