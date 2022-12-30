@@ -9,7 +9,7 @@ from sqlalchemy.orm import Session
 router = APIRouter()
 
 
-@router.get("/{user_name}/follow")
+@router.post("/{user_name}/follow")
 def follow_user(user_name: str, db: Session = Depends(get_db), current_user=Depends(get_current_user)):
     user_id = db.query(User).filter(User.email == current_user["email"]).one_or_none()
     target_id = db.query(User).filter(User.name == user_name).one_or_none()
