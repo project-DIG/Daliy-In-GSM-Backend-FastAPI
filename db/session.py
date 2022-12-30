@@ -8,22 +8,17 @@ engine = create_engine(f"mysql+pymysql://{settings.DB_URL}")
 
 
 def get_db():
-
+    session = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=engine))
     try:
-        session = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=engine))
         yield session
         session.commit()
-    except Exception as e:
-        raise HTTPException(status.HTTP_400_BAD_REQUEST, detail=e)
     finally:
         session.close()
 
 
 def get_redis_db():
+    conn = redis.StrictRedis(host=settings.REDIS_HOST, port=settings.REDIS_PORT, db=settings.REDIS_DB)
     try:
-        conn = redis.StrictRedis(host=settings.REDIS_HOST, port=settings.REDIS_PORT, db=settings.REDIS_DB)
         yield conn
-    except Exception as e:
-        raise HTTPException(status.HTTP_400_BAD_REQUEST, detail=e)
     finally:
         conn.close()

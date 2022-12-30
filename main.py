@@ -16,19 +16,25 @@ app.add_middleware(
 
 
 @app.get("/zz")
-def test():
-    try:
-        import redis
-        from core.config import settings
+def zz():
+    import redis
+    from core.config import settings
 
-        r = redis.StrictRedis(settings.REDIS_DB, settings.REDIS_PORT, settings.REDIS_DB)
-        return r.get("asd")
-    except Exception as e:
-        print(e)
+    r = redis.StrictRedis(host=settings.REDIS_HOST)
+    r.set("asd", "성공!!")
+    return {"asd", r.get("asd").decode()}
+
+
+@app.get("/zzzz")
+def zzzz():
+    import redis
+    from core.config import settings
+
+    r = redis.StrictRedis(host=settings.REDIS_HOST)
+    return {"asd", r.get("asd").decode()}
 
 
 if __name__ == "__main__":
     import uvicorn
 
     uvicorn.run(app, host="0.0.0.0", port=8000)
-# git action test 1
