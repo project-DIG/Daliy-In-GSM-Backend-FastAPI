@@ -37,7 +37,6 @@ def email(
     code = "".join([random.choice(string.digits) for i in range(6)])
 
     redis_db.delete("s210013@gsm.hs.kr")
-    print(redis_db.get("s21001@gsm.hs.kr"))
 
     try:
         if req.email[0] != "s" or req.email[1:6].isdigit() == False:
