@@ -17,7 +17,7 @@ def get_db():
 
 
 def get_redis_db():
-    conn = redis.StrictRedis(host=settings.REDIS_HOST, port=settings.REDIS_PORT, db=settings.REDIS_DB)
+    conn = redis.StrictRedis(host=settings.REDIS_HOST)
     try:
         yield conn
     finally:
