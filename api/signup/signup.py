@@ -19,7 +19,15 @@ def signup(req: SignUp, db: Session = Depends(get_db), redis_db: StrictRedis = D
         raise HTTPException(status.HTTP_400_BAD_REQUEST, detail="진행중인 인증이 있습니다.")
 
     hashed_password = bcrypt.hashpw(req.password.encode(), bcrypt.gensalt()).decode()
-    db.add(User(id=None, name=req.name, password=hashed_password, email=req.email, profile_image="null"))
+    db.add(
+        User(
+            id=None,
+            name=req.name,
+            password=hashed_password,
+            email=req.email,
+            profile_image="https://cdn.icon-icons.com/icons2/2468/PNG/512/user_user_profile_user_icon_user_thump_icon_149321.png",
+        )
+    )
     redis_db.delete(req.email)
 
     return {"detail": "성공하였습니다."}
