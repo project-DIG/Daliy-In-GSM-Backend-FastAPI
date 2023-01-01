@@ -11,7 +11,7 @@ from sqlalchemy.orm import Session
 router = APIRouter()
 
 
-@router.get("/")
+@router.get("/mini")
 def minipage(db: Session = Depends(get_db), current_user=Depends(get_current_user)):
     user = db.query(User).filter(User.email == current_user["email"]).one_or_none()
 

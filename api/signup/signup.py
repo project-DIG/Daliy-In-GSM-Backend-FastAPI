@@ -13,10 +13,13 @@ router = APIRouter()
 @router.post("/")
 def signup(req: SignUp, db: Session = Depends(get_db), redis_db: StrictRedis = Depends(get_redis_db)):
     if redis_db.get(req.email) == None:
-        raise HTTPException(status.HTTP_400_BAD_REQUEST, detail="인증이 만료되었거나 없습니다.")
+        raise HTTPException(status.HTTP_401_UNAUTHORIZED, detail="인증이 만료되었거나 없습니다.")
 
     if redis_db.get(req.email).decode() != "success":
         raise HTTPException(status.HTTP_400_BAD_REQUEST, detail="진행중인 인증이 있습니다.")
+
+    if db.query(User).filter(User.name == req.name).one_or_none() != None:
+        raise HTTPException(status.HTTP_409_CONFLICT, detail="중복된 이름입니다.")
 
     hashed_password = bcrypt.hashpw(req.password.encode(), bcrypt.gensalt()).decode()
     db.add(
