@@ -35,4 +35,11 @@ def userpage(user_name: str, db: Session = Depends(get_db), current_user=Depends
     else:
         data["is_mine"] = False
 
+    if current_user != None:
+        currnet = db.query(User).filter(User.email == current_user["email"]).one_or_none()
+        if db.query(Follow).filter((Follow.user_id == currnet.id) & (Follow.target_id == user.id)):
+            data["follow"] = True
+        else:
+            data["follow"] = False
+
     return data
