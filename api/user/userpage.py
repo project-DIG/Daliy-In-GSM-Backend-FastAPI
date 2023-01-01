@@ -42,4 +42,4 @@ def userpage(user_name: str, db: Session = Depends(get_db), current_user=Depends
         else:
             data["is_follow"] = False
 
-    return data
+    return data  #
