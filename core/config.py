@@ -14,7 +14,7 @@ class Settings(BaseSettings):
 
     DB_URL: str = f"{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 
-    REDIS_HOST: str = os.getenv("REDIS_HOST")
+    REDIS_HOST: str = "127.0.0.1"
 
     JWT_SECRET: str = os.getenv("JWT_SECRET")
     JWT_ALGORITM: str = "HS256"
