@@ -20,7 +20,7 @@ jobs:
                 access_key_id: ${{ secrets.ACCESS_KEY_ID }}
                 secret_access_key: ${{ secrets.SECRET_ACCESS_KEY }}
                 account_id: 838235863925
-                repo: dig-fastapi
+                repo: dig-tlqkf
                 region: ap-northeast-2
                 tags: latest
                 dockerfile: Dockerfile
