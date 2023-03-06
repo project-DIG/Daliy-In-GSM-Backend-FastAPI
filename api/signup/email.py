@@ -36,8 +36,6 @@ def email(
 ):
     code = "".join([random.choice(string.digits) for i in range(6)])
 
-    redis_db.delete("s210013@gsm.hs.kr")
-
     try:
         if req.email[0] != "s" or req.email[1:6].isdigit() == False:
             raise HTTPException(status.HTTP_410_GONE, detail="GSM 계정이 아닙니다.")
