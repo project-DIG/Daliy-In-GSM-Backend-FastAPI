@@ -3,13 +3,19 @@
 ## Test Server Deploy Setting 
 > Amazon Linux 2 기준입니다.
 
+- install git
+```shell
+sudo yum install git -y
+```
 - clone git repository
+
 ```shell
 git clone https://github.com/project-DIG/Daliy-In-GSM-Backend-FastAPI.git
 ```
 
 - install requirement.txt using pip
 ```shell
+cd Daliy-In-GSM-Backend-FastAPI/
 pip3 install -r requirements.txt
 ```
 
