@@ -5,7 +5,7 @@
 
 - clone git repository
 ```shell
-git clone -b develop https://github.com/project-DIG/Daliy-In-GSM-Backend-FastAPI.git
+git clone https://github.com/project-DIG/Daliy-In-GSM-Backend-FastAPI.git
 ```
 
 - install requirement.txt using pip
@@ -16,7 +16,7 @@ pip3 install -r requirements.txt
 > run server
 
 ```shell
-python3 main.py
+python3 -m gunicorn -k uvicorn.workers.UvicornWorker --access-logfile ./http-log.log main:app --bind 0.0.0.0:8000 --workers 2
 ```
 
 - open security group port 8000
