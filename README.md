@@ -3,26 +3,23 @@
 ## Test Server Deploy Setting 
 > Amazon Linux 2 기준입니다.
 
-- install git
+- shells
 ```shell
+//git, docker, docker-compose 설치
 sudo yum install git -y
-```
-- clone git repository
+curl -fsSL https://get.docker.com/ | sudo sh
+sudo curl -L https://github.com/docker/compose/releases/download/1.25.0-rc2/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
 
-```shell
+//git clone
 git clone https://github.com/project-DIG/Daliy-In-GSM-Backend-FastAPI.git
-```
 
-- install requirement.txt using pip
-```shell
+//requirements 설치
 cd Daliy-In-GSM-Backend-FastAPI/
 pip3 install -r requirements.txt
-```
 
-> run server
-
-```shell
-python3 -m gunicorn -k uvicorn.workers.UvicornWorker --access-logfile ./http-log.log main:app --bind 0.0.0.0:8000 --workers 2
+//실행
+docker-compose up
 ```
 
 - open security group port 8000
