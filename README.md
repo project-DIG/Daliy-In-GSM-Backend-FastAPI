@@ -27,5 +27,6 @@ pip3 install -r requirements.txt
 docker-compose up
 ```
 
-- open security group port 8000
-  - AWS 혹은 다른 클라우드 공급자 의 서버 보안그룹을 8000 포트로 뚫어줍니다.
+- 포트 8000번을 열어줍니다
+
+- DB 관련 작업은 불가능할 수 있습니다
